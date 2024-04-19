@@ -1,5 +1,5 @@
 const { data } = require("../../users.json");
-
+const getQueryErrors = require("../../validators/users.validator");
 const getUsersData = (req, res) => {
   res.json(data);
 };
@@ -13,7 +13,7 @@ const getUsersDataWithUUID = (req, res) => {
   }
 };
 const getUsersDataWithGenderAndAge = (req, res) => {
-  //   const { gender, age } = req.query;
+  const { gender, age } = req.query;
   console.log(req.query);
   console.log(gender, age);
   if (gender && age) {

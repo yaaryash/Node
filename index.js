@@ -1,26 +1,19 @@
+require("dotenv").config();
 const express = require("express");
 const currencies = require("./currencies.json");
-const {
-  getCurrencies,
-  getCurrenciesWithSymbol,
-} = require("./controllers/currencies/currencies.controllers");
-const {
-  getUsersData,
-  getUsersDataWithUUID,
-  getUsersDataWithGenderAndAge,
-} = require("./controllers/users/users.controllers");
+
+const currencyRoute = require("./Routers/Currencies/currencies.router");
+const userRoute = require("./Routers/Users/users.routers");
+const verifyAuth = require("./middlewares/verifyAuth.middleware");
+
 const app = express();
 
-const PORT = 8082;
+const PORT = 3003;
+app.use(verifyAuth);
 
-app.get("/", (req, res) => {
-  res.send("<h1>Currency DataBAse</h1>");
-});
-app.get("/currencies", getCurrencies);
-app.get("/currencies/:symbol", getCurrenciesWithSymbol);
-app.get("/users", getUsersData);
-app.get("/users/:uuid", getUsersDataWithUUID);
-app.get("/users/search", getUsersDataWithGenderAndAge);
+app.use("/currencies", currencyRoute);
+
+app.use("/users", userRoute);
 
 app.listen(PORT, () => {
   console.log("Listening to port: ", PORT);
