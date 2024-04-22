@@ -8,6 +8,7 @@ const schema = Joi.object()
   .or("age", "gender");
 
 const getQueryErrors = (data) => {
+  console.log(data);
   const result = schema.validate(data);
   return result.error;
 };
